@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Using Closure on Timer</title>
+        <script src="script.js"></script>
+        <style media="screen">
+            .pass {
+                color: green;
+            }
+            .fail {
+                color: red;
+            }
+            #box {
+                height : 100px;
+                width : 100px;
+                background : blue;
+                position: absolute;
+            }
+            #anotherBox {
+                height : 100px;
+                width : 100px;
+                margin-left: 100px;
+                background : green;
+                position: absolute;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="box">Me Box!</div>
+        <div id="anotherBox">Me anotherBox!</div>
+        <ul id="result"></ul>
+        <script>
+            /** Note !
+                We can move the three variable inside of animateIt() out into global scope, but
+                they need to be set each every animate. That's why we use the Closure.
+            **/
+
+            function animateIt(elementId) {
+                /** The function closure **/
+                var elem = document.getElementById(elementId), // It can access this,
+                    tick = 0; // this
+                    // also this (I mean the timer)
+                var timer = setInterval(function () { // The function
+                    if (tick < 100) {
+                        elem.style.left = elem.style.top = tick + "px";
+                        tick++;
+                    }else {
+                        clearInterval(timer);
+                        assert(tick === 100, "Tick accessed via closure.");
+                        assert(elem, "elem also accessed via closure.");
+                        assert(timer, "Timer reference also obtained via closure.");
+                    }
+                });
+                /** end closure **/
+            }
+            animateIt("box");
+            animateIt("anotherBox");
+        </script>
+    </body>
+</html>

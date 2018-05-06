@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Closure in Ajax</title>
+        <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script src="script.js"></script>
+        <style media="screen">
+            .pass {
+                color: green;
+            }
+            .fail {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="testSubject"></div>
+        <button name="button" id="testButton">Go!</button>
+        <script>
+
+            $("#testButton").click(function () {
+                var elem$ = $("#testSubject");
+                elem$.html("Loading...");
+
+                $.ajax({
+                    url : "test.html",
+                    success : function (data) {
+                        assert(elem$, "We can see elem$ via closure for this callback.");
+                        elem$.html(data);
+                    }
+                });
+            });
+
+        </script>
+        <ul id="result">
+
+        </ul>
+    </body>
+</html>

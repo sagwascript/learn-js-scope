@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Binding Function Context</title>
+        <script src="script.js"></script>
+        <style media="screen">
+            .pass {
+                color: green;
+            }
+            .fail {
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="test">Click Me!</button>
+        <ul id="result"></ul>
+        <script>
+
+            function bind(context, name) {
+                // returning the anonymous function makes the method invocation delayed until the 'object element' event handler fires
+                return function () {
+                    // assert(button, "button was here");
+                    return context[name].apply(context, arguments);
+                }
+            }
+
+            var button = {
+                clicked : false,
+                click : function () {
+                    this.clicked = true;
+                    assert(button.clicked, "The button has been clicked.");
+                    console.log(this);
+                }
+            };
+
+            var elem = document.getElementById("test");
+
+            elem.addEventListener("click", bind(button, "click"), false);
+            // bind() method used for binding the function context to be the button object (not the target element).
+            // 'coz the browser event handling system set the context to the target element (in this case 'elem') as an event handler
+        </script>
+    </body>
+</html>

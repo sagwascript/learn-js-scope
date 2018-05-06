@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Loop in closure</title>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <div>
+            Div 0
+        </div>
+        <div>
+            Div 1
+        </div>
+        <script>
+            var divs = document.getElementsByTagName("div");
+
+           for (var i = 0; i < divs.length; i++) 
+                (function (n) {
+                    divs[n].addEventListener("click", function () {
+                        alert("divs #"+ n +"was clicked");
+                    }, false);
+                })(i);
+
+        /*    for (var i = 0; i < divs.length; i++) {
+                divs[i].addEventListener("click",
+                function () {
+                     alert("divs "+i+" was clicked");
+                     // this 'i' variable is passed with the last value of 'i'
+                }
+                , false);
+            }
+        |==== WHAT THEY DO WITH THE LOOP ====|
+            i = 0;
+            function () {
+                alert("divs i was clicked");
+            }
+            i = 1;
+            function () {
+                alert("divs i was clicked");
+            }
+            i = 2; <- the loop stop
+            and now 'i' is 2, because of closure variable is share reference of the value so every function which created by
+            loop operation and access 'i' variable now referencing 'i' as 2
+        |==================================|
+        */
+        </script>
+    </body>
+</html>
